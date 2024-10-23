@@ -10,7 +10,11 @@
 <title>Probando0 listado</title>
 </head>
 <body>
+    <%
+    String url = "http://localhost:8089/proyectoWebGB/";
+    %>
 	<h1>Lista de Elementos</h1>
+	<a type=button href="<%=url%>AutoresController?op=nuevo"> Nuevo Autor</a>
 	<table id="tablalista" border="1">
 		<thead>
 			<tr>

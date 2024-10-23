@@ -41,7 +41,7 @@ public class AutoresController extends HttpServlet {
 			break;
 
 		case "nuevo":
-			// nuevo()
+			request .getRequestDispatcher("/autores/nuevoAutores.jsp").forward(request, response);
 			break;
 
 		}
@@ -71,7 +71,7 @@ public class AutoresController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}// issac es gay
+	}//
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
