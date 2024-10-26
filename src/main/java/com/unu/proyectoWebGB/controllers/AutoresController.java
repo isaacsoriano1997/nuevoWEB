@@ -43,7 +43,51 @@ public class AutoresController extends HttpServlet {
 		case "nuevo":
 			request .getRequestDispatcher("/autores/nuevoAutores.jsp").forward(request, response);
 			break;
+		
+		case "insertar":
+			insertar(request,response);
+			break;
+			
+		case "modificar":
+			modificar(request,response);
+			break;
+		
+		case "obtener":
+			obtener(request,response);
+			break;
 
+		}
+	}
+	private void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			Autor miAutor = new Autor();
+			miAutor.setNombre(request.getParameter("nombreAutor")); // el parametro es del id de nuevoAutores.jsp
+			miAutor.setNacionalidad(request.getParameter("nacionalidadAutor")); //el parametro es del id de nuevoAutores.jsp
+			if(modelo.insertarAutor(miAutor)>0) {
+				request.getSession().setAttribute("exito", "autor registrado correctamente");
+			}else {
+				request.getSession().setAttribute("fracaso","autor no registrado" );
+			}
+			
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			String id = request.getParameter("id");
+			Autor miAutor = modelo.obtenerAutor(Integer.parseInt(id));
+			if(miAutor!= null) {
+				request.setAttribute("autor", miAutor);
+				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+			}else {
+				response.sendRedirect(request.getContextPath()+"/error404.jsp");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
