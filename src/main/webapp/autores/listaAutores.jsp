@@ -21,6 +21,7 @@
 				<th>Codigo Autor</th>
 				<th>Nombre</th>
 				<th>Nacionalidad</th>
+				<th>Operacion</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,7 +34,10 @@
 				<td><%=autor.getIdAutor() %></td>
 				<td><%=autor.getNombre() %></td>
 				<td><%=autor.getNacionalidad() %></td>
-				<a href="<%=url%>AutoresController?op=obtener&id=<%=autor%>"></a>
+				<td>
+				<a href="<%=url%>AutoresController?op=obtener&id=<%=autor.getIdAutor()%>">Modificar</a>
+				<a href="<%=url%>AutoresController?op=eliminar&idautor=<%=autor.getIdAutor()%>">Eliminar</a>
+				</td>
 			</tr>
 
 			<%

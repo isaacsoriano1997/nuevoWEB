@@ -51,9 +51,13 @@ public class AutoresController extends HttpServlet {
 		case "modificar":
 			modificar(request,response);
 			break;
+			
 		
 		case "obtener":
 			obtener(request,response);
+			break;
+		case "eliminar":
+			eliminar(request,response);
 			break;
 
 		}
@@ -65,7 +69,7 @@ public class AutoresController extends HttpServlet {
 			miAutor.setNacionalidad(request.getParameter("nacionalidadAutor")); //el parametro es del id de nuevoAutores.jsp
 			if(modelo.insertarAutor(miAutor)>0) {
 				request.getSession().setAttribute("exito", "autor registrado correctamente");
-			}else {
+			}else { 
 				request.getSession().setAttribute("fracaso","autor no registrado" );
 			}
 			
@@ -86,6 +90,40 @@ public class AutoresController extends HttpServlet {
 			}else {
 				response.sendRedirect(request.getContextPath()+"/error404.jsp");
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void modificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			Autor miAutor = new Autor();
+			miAutor.setIdAutor(Integer.parseInt(request.getParameter("idAutor")));
+			miAutor.setNombre(request.getParameter("nombreAutor")); // el parametro es del id de nuevoAutores.jsp
+			miAutor.setNacionalidad(request.getParameter("nacionalidadAutor")); //el parametro es del id de nuevoAutores.jsp
+			if(modelo.modificarAutor(miAutor)>0) { 
+				request.getSession().setAttribute("exito", "autor modificado correctamente");
+			}else { 
+				request.getSession().setAttribute("fracaso","autor no modificado" );
+			}
+			
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			int idautor = Integer.parseInt(request.getParameter("idautor"));
+			if(modelo.eliminarAutor(idautor)>0) { 
+				request.getSession().setAttribute("exito", "autor eliminado correctamente");
+			}else { 
+				request.getSession().setAttribute("fracaso","autor no eliminado" );
+			}
+			
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

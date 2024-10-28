@@ -66,6 +66,7 @@ public class AutoresModel extends Conexion {
 			this.abrirConexion();
 			cs=conexion.prepareCall(sql);
 			cs.setInt(1, idautor);
+			rs= cs.executeQuery();
 			if(rs.next()) {
 				autor.setIdAutor(rs.getInt("idautores"));
 				autor.setNombre(rs.getString("nombre_autor"));
@@ -88,6 +89,22 @@ public class AutoresModel extends Conexion {
 			cs.setInt(1, autor.getIdAutor());
 			cs.setString(2, autor.getNombre());
 			cs.setString(3, autor.getNacionalidad());
+			filasAfectadas=cs.executeUpdate();
+			this.cerrarConexion();
+			return filasAfectadas;
+		}catch (SQLException e) {
+			this.cerrarConexion();
+			return 0;
+		}
+	}
+	
+	public int eliminarAutor(int idautor) throws SQLException{
+		try {
+			int filasAfectadas =0;
+			String sql= "CALL sp_eliminarAutor(?)";
+			this.abrirConexion();
+			cs= conexion.prepareCall(sql);
+			cs.setInt(1, idautor);
 			filasAfectadas=cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;
